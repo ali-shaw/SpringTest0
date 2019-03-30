@@ -1,6 +1,8 @@
 package hello;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +26,7 @@ public class GreetingController {
     @Autowired
     HttpServletRequest request;
 
+    private static final Logger logger = LoggerFactory.getLogger(GreetingController.class);
 
     @RequestMapping("/ServiceC")
     public String serviceC() throws InterruptedException {
@@ -37,6 +40,7 @@ public class GreetingController {
 
         //Sleep
         Thread.sleep(250L);
+        logger.info("In Service C ***************");
 
         //Post to downstream service
         String rs = restTemplate.postForEntity("http://localhost:9393/ServiceD", new HttpEntity(header), String.class).getBody();
